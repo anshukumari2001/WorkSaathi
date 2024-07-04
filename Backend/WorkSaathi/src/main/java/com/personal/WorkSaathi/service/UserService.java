@@ -22,11 +22,9 @@ public class UserService {
     }
 
     public String addUser(UserDTO userDTO) {
-        User existingUser =
-            userRepository.findByEmail(userDTO.getEmail()).orElseThrow(
-                () -> new UsernameNotFoundException(
-                    "This user email already exist : " + userDTO.getEmail()));
-        if (Objects.nonNull(existingUser)) {
+        Optional<User> existingUser =
+            userRepository.findByEmail(userDTO.getEmail());
+        if (existingUser.isPresent()) {
             return "User already present with this email";
         }
         User user = User.builder()
