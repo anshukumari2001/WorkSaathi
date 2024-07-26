@@ -1,4 +1,5 @@
 package com.personal.WorkSaathi.entity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.personal.WorkSaathi.enums.JobType;
 import com.personal.WorkSaathi.enums.UserType;
@@ -10,18 +11,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 @Entity
 @Table(name = "job_posts")
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
 @NoArgsConstructor
 @Getter
 @Setter
-public class JobPost {
+public class JobApply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +40,7 @@ public class JobPost {
     private String jobDescription;
     private String location;
     private double salary;
+
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
@@ -55,12 +56,12 @@ public class JobPost {
     protected Instant updatedAt = Instant.now();
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "job_apply_job_post",
+        joinColumns = @JoinColumn(name = "job_apply_id"),
+        inverseJoinColumns = @JoinColumn(name = "job_post_id")
+    )
+    private List<JobPost> jobPosts;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "jobPosts", fetch = FetchType.EAGER)
-    private List<JobApply> jobApplies;
 }
-

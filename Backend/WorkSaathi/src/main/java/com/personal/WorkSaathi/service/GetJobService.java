@@ -1,6 +1,7 @@
 package com.personal.WorkSaathi.service;
 
 import com.personal.WorkSaathi.entity.JobPost;
+import com.personal.WorkSaathi.enums.JobType;
 import com.personal.WorkSaathi.repository.JobPostRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,9 @@ public class GetJobService {
 
     public List<JobPost> getAllJobPostsByLocation(String location) {
         return jobPostRepository.findByLocation(location);
+    }
+
+    public List<JobPost> getAllJobPostsByJobType(JobType jobType) {
+        return jobPostRepository.findByJobType(jobType);
     }
 }

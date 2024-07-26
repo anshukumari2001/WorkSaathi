@@ -28,6 +28,7 @@ public class JobPostService {
             .location(jobPostDTO.getLocation())
             .salary(jobPostDTO.getSalary())
             .user(user)
+            .jobType(jobPostDTO.getJobType())
             .build();
 
         return jobPostRepository.save(jobPost);

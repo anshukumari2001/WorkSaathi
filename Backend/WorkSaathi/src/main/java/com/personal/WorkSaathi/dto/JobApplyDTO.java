@@ -9,11 +9,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class JobPostDTO {
+public class JobApplyDTO {
     private String title;
     private String jobDescription;
     private String location;
     private double salary;
     private UserType userType;
     private JobType jobType;
+
+    // Fields for email details
+    private String emailTo;
+    private String emailSubject;
+    private String emailText;
+
 }
